@@ -7,7 +7,7 @@ public class LeftBat : MonoBehaviour
     public float fireballSpeed = 200f;
     public Vector2 fireballDirection = Vector2.down;
     public Vector3 fireballScale = new Vector3(20f, 20f, 1f);
-    public float shootInterval = 4f;
+    public float shootInterval = 6f;
     public int fireballDamage = 10;
 
     private float shootTimer;

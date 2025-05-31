@@ -13,8 +13,8 @@ public class Fireball : MonoBehaviour
     private float frequency = 2f;
     private float amplitude = 2f;
 
-    public float horizontalSpeed = 300f; // Controls how far right it goes
-    public float curvature = 5f; 
+    public float horizontalSpeed = 50f; // Controls how far right it goes
+    public float curvature = 50f; 
 
     public int damage = 0;
 
@@ -60,20 +60,19 @@ public class Fireball : MonoBehaviour
             case FireballPathType.ArchRight:
                 float tRight = localTime + phaseOffset;
 
-                float xRight = tRight * horizontalSpeed;
-                float yRight = -Mathf.Pow(tRight, 2) * curvature;
+                float xRight = tRight * horizontalSpeed;                     // Linear horizontal movement
+                float yRight = -Mathf.Pow(tRight, 2) * curvature;           // Parabolic vertical movement
 
-                transform.position += new Vector3(xRight, yRight, 0f) * Time.deltaTime;
+                transform.position = initialPosition + new Vector3(xRight, yRight, 0f);
                 break;
 
-
             case FireballPathType.ArchLeft:
-                float tLeft = localTime - phaseOffset;
+                float tLeft = localTime + phaseOffset;
 
-                float xLeft = -tLeft * horizontalSpeed;             // Moves to the left over time (notice the minus sign)
-                float yLeft = -Mathf.Pow(tLeft, 2) * curvature;     // Moves downward parabolically
+                float xLeft = -tLeft * horizontalSpeed;                    
+                float yLeft = -Mathf.Pow(tLeft, 2) * curvature;            
 
-                transform.position += new Vector3(xLeft, yLeft, 0f) * Time.deltaTime;
+                transform.position = initialPosition + new Vector3(xLeft, yLeft, 0f);
                 break;
         }
 
@@ -83,7 +82,10 @@ public class Fireball : MonoBehaviour
         }
     }
 
-    public void Initialize(float newSpeed, Vector2 newDirection, Vector3 newScale, int newDamage, FireballPathType pathType, float phaseOffset = 0f)
+    public void Initialize(
+        float newSpeed, Vector2 newDirection, Vector3 newScale, int newDamage, 
+        FireballPathType pathType, float phaseOffset = 0f
+    )
     {
         this.speed = newSpeed;
         this.direction = newDirection.normalized;
